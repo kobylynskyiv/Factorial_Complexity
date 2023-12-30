@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TaskManager</string>
+
+    <string name="common_fragment_label">Common Fragment</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="create">Create</string>
+    <string name="error_no_found_position" />
+</resources>

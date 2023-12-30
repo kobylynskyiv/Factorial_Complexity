@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TaskManager</string>
+
+
+    <!-- Errors -->
+    <string name="error_no_found_position">Recycler view - no found position</string>
+    <string name="error_no_found_view">View was not found</string>
+    <string name="error_no_found_context">Context was not found</string>
+
+</resources>
