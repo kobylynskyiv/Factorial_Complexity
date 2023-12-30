@@ -38,19 +38,16 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
+    implementation 'de.musichin.reactivelivedata:reactivelivedata:1.2.1'
 
-    // remote
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3'
 
     // LiveKit
-    implementation "io.livekit:livekit-android:1.4.0"
+    implementation libs.livekit.android
 
     // remote
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3'
+    implementation libs.squareup.retrofit.gson.converter
+    implementation libs.logging.interceptor.v500alpha3
 
     implementation(libs.google.hilt)
     kapt(libs.google.hilt.compiler)

@@ -3,6 +3,7 @@ package com.kobylynskyiv.taskmanager.presentation.utils.alert
 import android.app.Activity
 import androidx.annotation.ColorRes
 import com.tapadoo.alerter.R
+import javax.inject.Singleton
 import com.tapadoo.alerter.Alerter as AlerterImpl
 
 class Alerter(
@@ -15,7 +16,6 @@ class Alerter(
     ) = showAlert(
         title = title,
         message = message,
-        activity = activity,
         backgroundColor = com.kobylynskyiv.taskmanager.R.color.orange
     )
 
@@ -25,7 +25,6 @@ class Alerter(
     ) = showAlert(
         title = title,
         message = message,
-        activity = activity,
         backgroundColor = R.color.alert_default_error_background
     )
 
@@ -35,7 +34,6 @@ class Alerter(
     ) = showAlert(
         title = title,
         message = message,
-        activity = activity,
         backgroundColor = R.color.alerter_default_success_background
     )
 
@@ -45,14 +43,12 @@ class Alerter(
     ) = showAlert(
         title = title,
         message = message,
-        activity = activity,
         backgroundColor = R.color.notification_icon_bg_color
     )
 
     private fun showAlert(
         title: String,
         message: String,
-        activity: Activity,
         @ColorRes backgroundColor: Int
     ) = AlerterImpl.create(activity)
         .setTitle(title)

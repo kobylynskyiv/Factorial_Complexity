@@ -13,11 +13,13 @@ import com.kobylynskyiv.taskmanager.presentation.base.BaseFragment
 import com.kobylynskyiv.taskmanager.presentation.ui.main.viewmodel.MainViewModel
 import com.kobylynskyiv.taskmanager.presentation.utils.alert.Alerter
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFragment: BaseFragment<FragmentMainBinding, MainViewModel>() {
+
     override val viewModel: MainViewModel by viewModels()
-    private val mAlerter by lazy { Alerter(requireActivity()) }
+    val alerter: Alerter by lazy { Alerter(requireActivity()) }
 
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentMainBinding {
         return FragmentMainBinding.inflate(layoutInflater)
@@ -32,11 +34,8 @@ class MainFragment: BaseFragment<FragmentMainBinding, MainViewModel>() {
         with(viewModel){
             load()
             observer.observe(viewLifecycleOwner) {
-                when (it) {
-                    is String -> mAlerter.showError(getString(R.string.error), it)
-                    /*else -> {
-                        adapter.submitList(it)
-                    }*/
+                if (it.error != null) {
+                    alerter.showError(getString(R.string.error), it.toString())
                 }
             }
         }

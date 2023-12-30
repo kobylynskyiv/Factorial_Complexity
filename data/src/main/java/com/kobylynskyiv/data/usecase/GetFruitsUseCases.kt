@@ -1,7 +1,11 @@
 package com.kobylynskyiv.data.usecase
 
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.Transformations.switchMap
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
+import com.kobylynskyiv.core.domain.FruitCore
+import com.kobylynskyiv.data.extentions.toFruitData
+import com.kobylynskyiv.data.helper.ApiErrorResponseExtensions
+import com.kobylynskyiv.data.helper.ApiSuccessResponseExtensions
 import com.kobylynskyiv.data.repository.FruitRepository
 import javax.inject.Inject
 
@@ -9,10 +13,13 @@ class GetFruitsUseCases @Inject constructor(
    private val mFruitRepository: FruitRepository
 ) {
 
-   private val value = mFruitRepository._observable.let {
-      /*flatMapIndexed {
-         dbLiveData.search(name) //a list with the names
-      }*/
+   private var _value = mFruitRepository._observable.map {
+      return@map when(it) {
+         is ApiSuccessResponseExtensions -> (it.value as FruitCore).toFruitData()
+         is ApiErrorResponseExtensions -> it.value
+      }
    }
+
+   val value: LiveData<Any> = _value
    suspend operator fun invoke() = mFruitRepository.getAllFruits()
 }
