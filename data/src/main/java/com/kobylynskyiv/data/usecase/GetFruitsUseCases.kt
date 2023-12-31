@@ -17,7 +17,7 @@ class GetFruitsUseCases @Inject constructor(
 
    private var _value = mFruitRepository._observable.map {
       return@map when (it) {
-         is ApiSuccessResponseExtensions -> (it.value as ResponseFruitCore).items.map { fruitCore -> fruitCore.toFruitData() }
+         is ApiSuccessResponseExtensions -> it.value as ResponseFruitCore
          is ApiErrorResponseExtensions -> it.value
       }
    }

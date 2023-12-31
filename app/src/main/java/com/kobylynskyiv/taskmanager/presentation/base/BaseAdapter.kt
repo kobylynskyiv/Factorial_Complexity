@@ -12,7 +12,9 @@ import com.kobylynskyiv.taskmanager.presentation.utils.extentions.NoViewExceptio
 import com.kobylynskyiv.taskmanager.presentation.utils.extentions.PositionNotFoundException
 
 
-class BaseAdapter<T: AdapterModel> : ListAdapter<T, RecyclerView.ViewHolder>(ItemDiffCallback<T>()) {
+class BaseAdapter<T: AdapterModel>(
+    val onClickListener: ((Any) -> Any?)? = null
+): ListAdapter<T, RecyclerView.ViewHolder>(ItemDiffCallback<T>()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             R.layout.row_fruit -> AdapterRowFruitViewHolder(RowFruitBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -24,7 +26,7 @@ class BaseAdapter<T: AdapterModel> : ListAdapter<T, RecyclerView.ViewHolder>(Ite
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is AdapterRowFruitViewHolder -> holder.bind(getItem(position) as AdapterModel.FruitModel)
+            is AdapterRowFruitViewHolder -> holder.bind(getItem(position) as AdapterModel.FruitModel, onClickListener)
         }
     }
 

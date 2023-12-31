@@ -4,6 +4,7 @@
 
     <!-- Errors -->
     <string name="error">Error was catch</string>
+    <string name="complete">Load was success</string>
     <string name="error_no_found_position">Recycler view - no found position</string>
     <string name="error_no_found_view">View was not found</string>
     <string name="error_no_found_context">Context was not found</string>

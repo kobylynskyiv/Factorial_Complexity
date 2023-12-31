@@ -10,16 +10,20 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/row_fruit"
-        app:spanCount="2"
-        tools:itemCount="5"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:spanCount="2"
+        tools:itemCount="5"
+        tools:listitem="@layout/row_fruit">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <include
+        android:id="@+id/include_loading"
+        layout="@layout/include_loading"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
