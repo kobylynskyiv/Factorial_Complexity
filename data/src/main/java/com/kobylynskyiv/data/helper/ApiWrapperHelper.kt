@@ -9,10 +9,7 @@ object ApiWrapperHelper {
         if (NetworkHelper.isInternetPing()) {
             call.enqueue(object : Callback<T> {
                 override fun onResponse(call: Call<T>, response: Response<T>) {
-                    val body = response.body()
-                    resultWrapper.invoke(
-                        if(body == null) ApiErrorResponseExtensions("Empty body") else ApiSuccessResponseExtensions(body)
-                    )
+                    resultWrapper.invoke(ApiResponseExtensions(response))
                 }
 
                 override fun onFailure(call: Call<T>, t: Throwable) {

@@ -7,12 +7,10 @@ sealed class ApiResponseExtensions<T> {
         operator fun <T> invoke(response: Response<T>): ApiResponseExtensions<T> {
             return try {
                 val body = response.body()
-                return when (response.code()) {
-                    SUCCESS -> if(body == null) ApiErrorResponseExtensions("Empty body") else ApiSuccessResponseExtensions(body)
-                    else -> ApiErrorResponseExtensions(
-                        response.errorBody()?.string() ?: "Unknown error"
-                    )
-                }
+
+                if (response.code() == SUCCESS && response.isSuccessful && body != null) ApiSuccessResponseExtensions(body)
+                else ApiErrorResponseExtensions(response.errorBody()?.string() ?: "Unknown error")
+
             } catch (e: Exception) {
                 val msg = response.errorBody()?.string()
                 val errorMessage = if (msg.isNullOrEmpty()) {
@@ -29,5 +27,5 @@ sealed class ApiResponseExtensions<T> {
     }
 }
 
-class ApiSuccessResponseExtensions<T>(val value: T) : ApiResponseExtensions<T>()
+class ApiSuccessResponseExtensions<T>(val value: T?) : ApiResponseExtensions<T>()
 class ApiErrorResponseExtensions<T>(val value: String) : ApiResponseExtensions<T>()
