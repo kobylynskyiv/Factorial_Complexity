@@ -8,7 +8,7 @@ sealed class ApiResponseExtensions<T> {
             return try {
                 val body = response.body()
                 return when (response.code()) {
-                    SUCCESS -> ApiSuccessResponseExtensions(body)
+                    SUCCESS -> if(body == null) ApiErrorResponseExtensions("Empty body") else ApiSuccessResponseExtensions(body)
                     else -> ApiErrorResponseExtensions(
                         response.errorBody()?.string() ?: "Unknown error"
                     )
@@ -29,5 +29,5 @@ sealed class ApiResponseExtensions<T> {
     }
 }
 
-class ApiSuccessResponseExtensions<T>(val value: T?) : ApiResponseExtensions<T>()
+class ApiSuccessResponseExtensions<T>(val value: T) : ApiResponseExtensions<T>()
 class ApiErrorResponseExtensions<T>(val value: String) : ApiResponseExtensions<T>()

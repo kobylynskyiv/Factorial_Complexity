@@ -13,7 +13,6 @@ fun FruitCore.toFruitData(): Fruit {
         id = this.id,
         name = this.name,
         image = this.image,
-        color = this.color,
-        data = Date()
+        color = this.color
     )
 }
