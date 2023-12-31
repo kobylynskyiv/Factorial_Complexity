@@ -4,6 +4,8 @@ compileSdkVersion = "33"
 livekitAndroid = "1.4.0"
 loggingInterceptor = "5.0.0-alpha.3"
 minSdkVersion = "26"
+navigationUiKtx = "2.5.3"
+navigationFragmentKtx = "2.5.3"
 reactivelivedata = "1.2.1"
 targetSdkVersion = "33"
 versionCode = "1"
@@ -39,6 +41,8 @@ google-service = { id = "com.google.gms.google-services", version = "4.3.15" }
 
 [libraries]
 
+androidx-navigation-ui-ktx-v253 = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtx" }
+androidx-navigation-fragment-ktx-v253 = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 google-material = { module = "com.google.android.material:material", version.ref = "material" }
 google-gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 google-hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }

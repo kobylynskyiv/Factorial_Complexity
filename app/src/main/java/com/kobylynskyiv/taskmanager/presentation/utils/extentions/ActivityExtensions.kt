@@ -1,4 +1,4 @@
-package com.kobylynskyiv.taskmanager.presentation.utils
+package com.kobylynskyiv.taskmanager.presentation.utils.extentions
 
 import android.content.Context
 import android.view.inputmethod.InputMethodManager

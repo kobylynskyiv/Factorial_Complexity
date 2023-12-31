@@ -1,4 +1,4 @@
-package com.kobylynskyiv.taskmanager.presentation.utils
+package com.kobylynskyiv.taskmanager.presentation.utils.extentions
 
 import com.kobylynskyiv.taskmanager.R
 import com.kobylynskyiv.taskmanager.presentation.ui.App
