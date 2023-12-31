@@ -9,5 +9,22 @@
         android:id="@+id/MainFragment"
         android:name="com.kobylynskyiv.taskmanager.presentation.ui.main.MainFragment"
         tools:layout="@layout/fragment_main"
-        android:label="MainFragment" />
+        android:label="MainFragment">
+
+        <action
+            android:id="@+id/action_main_to_fruit"
+            app:destination="@id/FruitFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_in_left" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/FruitFragment"
+        tools:layout="@layout/fragment_fruit"
+        android:name="com.kobylynskyiv.taskmanager.presentation.ui.main.fruit.FruitFragment"
+        android:label="FruitFragment">
+    </fragment>
 </navigation>

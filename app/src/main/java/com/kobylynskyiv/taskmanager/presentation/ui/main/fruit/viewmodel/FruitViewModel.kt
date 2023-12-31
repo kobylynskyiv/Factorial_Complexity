@@ -1,39 +1,35 @@
-package com.kobylynskyiv.taskmanager.presentation.ui.main.viewmodel
+package com.kobylynskyiv.taskmanager.presentation.ui.main.fruit.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import com.kobylynskyiv.core.domain.ResponseFruitCore
+import com.kobylynskyiv.core.domain.ResponseFruitDetailCore
 import com.kobylynskyiv.data.di.UtilsProvides
-import com.kobylynskyiv.data.extentions.toFruitData
-import com.kobylynskyiv.data.model.Fruit
-import com.kobylynskyiv.data.usecase.GetFruitsUseCases
-import com.kobylynskyiv.taskmanager.presentation.base.AdapterModel
+import com.kobylynskyiv.data.usecase.QueryFruitsUseCases
 import com.kobylynskyiv.taskmanager.presentation.entity.UIEvent
 import com.kobylynskyiv.taskmanager.presentation.entity.UIStatus
+import com.kobylynskyiv.taskmanager.presentation.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
-    private val fruitsUseCases: GetFruitsUseCases,
+class FruitViewModel @Inject constructor(
+    private val fruitsUseCases: QueryFruitsUseCases,
     @UtilsProvides.IoDispatcher private val default: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(){
 
     val status = MutableLiveData<UIStatus?>()
+
     private val _observer = fruitsUseCases.value.map {
         return@map when(it){
-            is ResponseFruitCore -> {
+            is ResponseFruitDetailCore -> {
                 status.postValue(UIStatus.COMPLETE)
-                UIEvent(title = it.title, data = it.items.map { fruitModel -> AdapterModel.FruitModel(
-                    fruitModel.toFruitData()
-                )})
+                UIEvent(data = it.text)
             }
             else -> {
                 status.postValue(UIStatus.ERROR)
@@ -44,15 +40,13 @@ class MainViewModel @Inject constructor(
 
     val observer: LiveData<UIEvent> get() = _observer
 
-    fun fetch() = viewModelScope.launch(default) {
+    fun loadFruit(id: String) = viewModelScope.launch(default) {
         status.postValue(UIStatus.LOADING)
-        fruitsUseCases.invoke()
+        fruitsUseCases.invoke(id)
     }
 
     override fun onCleared() {
         status.postValue(null)
         super.onCleared()
     }
-
-
 }

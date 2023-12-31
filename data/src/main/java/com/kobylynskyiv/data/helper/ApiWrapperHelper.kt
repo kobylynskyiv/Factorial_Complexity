@@ -10,10 +10,12 @@ object ApiWrapperHelper {
             call.enqueue(object : Callback<T> {
                 override fun onResponse(call: Call<T>, response: Response<T>) {
                     resultWrapper.invoke(ApiResponseExtensions(response))
+                    return
                 }
 
                 override fun onFailure(call: Call<T>, t: Throwable) {
                     resultWrapper.invoke(ApiErrorResponseExtensions(t.message.toString()))
+                    return
                 }
             })
         } else {

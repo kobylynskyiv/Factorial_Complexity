@@ -37,7 +37,6 @@ object RemoteProvides {
                 .readTimeout(30, TimeUnit.SECONDS)
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
-                //.addNetworkInterceptor(AuthInterceptor(context, accountManager))
                 .addInterceptor { chain ->
                     val request = chain.request().newBuilder()
                         .header( "User-Agent", "android")

@@ -1,6 +1,7 @@
 package com.kobylynskyiv.data.model
 
 import androidx.annotation.Keep
+import java.io.Serializable
 import java.util.Date
 
 @Keep
@@ -10,7 +11,7 @@ data class Fruit(
     val image: String? = "",
     var color: String? = "",
     val data: Date = Date()
-){
+): Serializable {
     init {
         this.color = "#$color"
     }

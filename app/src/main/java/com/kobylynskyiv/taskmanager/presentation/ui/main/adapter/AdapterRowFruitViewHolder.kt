@@ -15,12 +15,12 @@ class AdapterRowFruitViewHolder(private val binding: RowFruitBinding): RecyclerV
             binding.title.text = name.toString()
             binding.root.setTint(color)
             binding.root.setOnClickListener {
-                onClickListener?.invoke(this.id.toString())
+                onClickListener?.invoke(this)
             }
 
             Glide.with(binding.root.context)
                 .load("${BuildConfig.API_URL}$image")
-                .placeholder(R.drawable.alerter_ic_face)
+                .placeholder(R.drawable.ic_launcher_foreground)
                 .into(binding.image)
         }
     }

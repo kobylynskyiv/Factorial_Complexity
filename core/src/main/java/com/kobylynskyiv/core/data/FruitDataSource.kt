@@ -1,5 +1,6 @@
 package com.kobylynskyiv.core.data
 
-fun interface FruitDataSource {
+interface FruitDataSource {
     suspend fun getAllFruits()
+    suspend fun queryByIdFruit(id: String)
 }

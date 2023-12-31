@@ -1,12 +1,13 @@
 package com.kobylynskyiv.core.domain
 
-import androidx.annotation.Keep
-
 data class ResponseFruitCore(
     val title: String,
     val items: List<FruitCore>
 )
-
+data class ResponseFruitDetailCore(
+    val id: String,
+    val text: String
+)
 
 data class FruitCore(
     val id: String,
@@ -14,3 +15,6 @@ data class FruitCore(
     val image: String,
     val color: String
 )
+
+
+
