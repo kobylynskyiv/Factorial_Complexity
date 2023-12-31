@@ -13,7 +13,7 @@ android {
         minSdk 21
         targetSdk 33
 
-        buildConfigField "String", "API_URL", "\"https://test-task-server.mediolanum.f17y.com/\""
+        buildConfigField "String", "API_URL", "\"https://test-task-server.mediolanum.f17y.com\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
