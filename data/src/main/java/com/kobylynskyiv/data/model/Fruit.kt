@@ -8,10 +8,12 @@ data class Fruit(
     val id: String? = "",
     val name: String? = "",
     val image: String? = "",
-    val color: String? = "",
+    var color: String? = "",
     val data: Date = Date()
 ){
-
+    init {
+        this.color = "#$color"
+    }
     override fun toString(): String {
         return "Fruit(id=$id, name='$name', image='$image', color='$color', data=$data)"
     }

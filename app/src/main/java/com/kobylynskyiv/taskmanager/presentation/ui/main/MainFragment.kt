@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.kobylynskyiv.data.model.Fruit
 import com.kobylynskyiv.taskmanager.R
 import com.kobylynskyiv.taskmanager.databinding.FragmentMainBinding
 import com.kobylynskyiv.taskmanager.presentation.base.AdapterModel
@@ -13,6 +12,7 @@ import com.kobylynskyiv.taskmanager.presentation.base.BaseFragment
 import com.kobylynskyiv.taskmanager.presentation.ui.main.viewmodel.MainViewModel
 import com.kobylynskyiv.taskmanager.presentation.utils.alert.Alerter
 import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
 
 @AndroidEntryPoint
 class MainFragment: BaseFragment<FragmentMainBinding, MainViewModel>() {
@@ -26,8 +26,10 @@ class MainFragment: BaseFragment<FragmentMainBinding, MainViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = BaseAdapter<AdapterModel>().apply {
-            binding.recyclerView.adapter = this
+        val adapter = BaseAdapter<AdapterModel>()
+        binding.recyclerView.apply {
+            this.adapter = adapter
+            this.itemAnimator = SlideInDownAnimator()
         }
 
         with(viewModel){

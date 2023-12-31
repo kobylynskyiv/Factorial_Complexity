@@ -8,14 +8,11 @@ import android.view.ViewGroup
 import androidx.annotation.IdRes
 import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
-import com.kobylynskyiv.taskmanager.presentation.utils.hideSoftInputKeyboard
+import com.kobylynskyiv.taskmanager.presentation.utils.extentions.hideSoftInputKeyboard
 import com.kobylynskyiv.taskmanager.presentation.utils.lazyNonSafetyMode
-import com.kobylynskyiv.taskmanager.presentation.utils.lazySynchronizedMode
 
 
 /**

@@ -27,13 +27,10 @@ class FruitRepository @Inject constructor(
 
 
     override suspend fun getAllFruits() {
-    /*    if (!NetworkHelper.isInternetPing() && local.getRowCount() > EMPTY) {
-            _observable.postValue(
-                ApiDataResult.UserDataSuccess(
-                    local.getAllTasksAsFlow()
-                )
+        if (!NetworkHelper.isInternetPing() && local.getRowCount() > EMPTY) {
+            //_observable.postValue(local.getAllTasksAsFlow())
             return
-        }*/
+        }
 
         ApiWrapperHelper.wrapper(remote.getFruits()) {
             when (it) {

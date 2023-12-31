@@ -1,11 +1,10 @@
 package com.kobylynskyiv.taskmanager.presentation.ui
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.StrictMode
 import com.kobylynskyiv.taskmanager.BuildConfig
-import com.kobylynskyiv.taskmanager.presentation.utils.NoFoundAppContext
+import com.kobylynskyiv.taskmanager.presentation.utils.extentions.NoFoundAppContext
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 

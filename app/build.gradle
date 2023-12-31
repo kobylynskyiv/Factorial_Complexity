@@ -72,6 +72,9 @@ dependencies {
     implementation libs.androidx.navigation.ui.ktx.v253
     implementation 'com.github.tapadoo:alerter:7.2.4'
 
+    // recyclerview animations
+    implementation 'jp.wasabeef:recyclerview-animators:4.0.2'
+
     // Timber
     implementation 'com.jakewharton.timber:timber:5.0.1'
 

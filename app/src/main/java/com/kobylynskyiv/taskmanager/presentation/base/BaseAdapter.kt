@@ -8,8 +8,8 @@ import com.kobylynskyiv.taskmanager.R
 import com.kobylynskyiv.taskmanager.databinding.RowFruitBinding
 import com.kobylynskyiv.taskmanager.presentation.ui.main.adapter.AdapterRowFruitViewHolder
 import com.kobylynskyiv.taskmanager.presentation.utils.ItemDiffCallback
-import com.kobylynskyiv.taskmanager.presentation.utils.NoViewException
-import com.kobylynskyiv.taskmanager.presentation.utils.PositionNotFoundException
+import com.kobylynskyiv.taskmanager.presentation.utils.extentions.NoViewException
+import com.kobylynskyiv.taskmanager.presentation.utils.extentions.PositionNotFoundException
 
 
 class BaseAdapter<T: AdapterModel> : ListAdapter<T, RecyclerView.ViewHolder>(ItemDiffCallback<T>()) {

@@ -3,7 +3,6 @@ package com.kobylynskyiv.taskmanager.presentation.utils.extentions
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.View
-import android.widget.ImageView
 
 fun View.visibleOrGone(visible: Boolean) {
     visibility = if (visible) {
@@ -22,5 +21,5 @@ fun View.visibleOrInvisible(visible: Boolean) {
 
 fun View.setTint(color: String?){
     if(color == null) return
-    this.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#$color"));
+    this.backgroundTintList = ColorStateList.valueOf(Color.parseColor(color));
 }
