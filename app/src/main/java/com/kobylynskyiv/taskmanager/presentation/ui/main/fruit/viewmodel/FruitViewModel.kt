@@ -1,7 +1,6 @@
 package com.kobylynskyiv.taskmanager.presentation.ui.main.fruit.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
@@ -10,7 +9,7 @@ import com.kobylynskyiv.data.di.UtilsProvides
 import com.kobylynskyiv.data.usecase.QueryFruitsUseCases
 import com.kobylynskyiv.taskmanager.presentation.entity.UIEvent
 import com.kobylynskyiv.taskmanager.presentation.entity.UIStatus
-import com.kobylynskyiv.taskmanager.presentation.utils.Event
+import com.kobylynskyiv.taskmanager.presentation.utils.SingleLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +22,7 @@ class FruitViewModel @Inject constructor(
     @UtilsProvides.IoDispatcher private val default: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(){
 
-    val status = MutableLiveData<UIStatus?>()
+    val status = SingleLiveData<UIStatus?>()
 
     private val _observer = fruitsUseCases.value.map {
         return@map when(it){

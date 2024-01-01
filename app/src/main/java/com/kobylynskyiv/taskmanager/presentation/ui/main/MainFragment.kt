@@ -2,8 +2,10 @@ package com.kobylynskyiv.taskmanager.presentation.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
 import com.kobylynskyiv.data.model.Fruit
@@ -23,53 +25,70 @@ class MainFragment: BaseFragment<FragmentMainBinding, MainViewModel>() {
 
     override val viewModel: MainViewModel by viewModels()
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        requireActivity().menuInflater.inflate(R.menu.menu_main, menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.refresh -> viewModel.fetch().let { true }
+            else -> { true }
+        }
+    }
+
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentMainBinding {
         return FragmentMainBinding.inflate(layoutInflater)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val adapter = BaseAdapter<AdapterModel>() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+
+        val adapter = BaseAdapter<AdapterModel> {
             val bundle = Bundle()
             bundle.putSerializable(CONTENT, it as Fruit)
             navigateToFragment(R.id.FruitFragment, bundle)
         }
 
-        binding.recyclerView.apply {
-            this.adapter = adapter
-            this.itemAnimator = SlideInDownAnimator()
-        }
+        with(binding) {
+            if(this == null) return
 
-        with(viewModel){
-            fetch()
+            recyclerView.apply {
+                this.adapter = adapter
+                this.itemAnimator = SlideInDownAnimator()
+            }
 
-            status.observe(viewLifecycleOwner){
-                when(it){
-                    UIStatus.LOADING -> binding.includeLoading.root.visibleOrInvisible(true)
-                    UIStatus.COMPLETE -> {
-                        binding.includeLoading.root.visibleOrInvisible(false)
-                        alerter.showSuccess(getString(R.string.complete), it.toString())
+            with(viewModel){
+                fetch()
+
+                status.observe(viewLifecycleOwner){
+                    when(it){
+                        UIStatus.LOADING -> {
+                            recyclerView.visibleOrInvisible(false)
+                            includeLoading.root.visibleOrInvisible(true)
+                        }
+                        UIStatus.COMPLETE -> {
+                            recyclerView.visibleOrInvisible(true)
+                            includeLoading.root.visibleOrInvisible(false)
+                            alerter.showSuccess(getString(R.string.complete), it.toString())
+                        }
+                        UIStatus.ERROR -> {
+                            recyclerView.visibleOrInvisible(true)
+                            includeLoading.root.visibleOrInvisible(false)
+                            alerter.showError(getString(R.string.error), it.toString())
+                        }
+
+                        else -> {}
                     }
-                    UIStatus.ERROR -> {
-                        binding.includeLoading.root.visibleOrInvisible(false)
-                        alerter.showError(getString(R.string.error), it.toString())
-                    }
+                }
 
-                    else -> {}
+                observer.observe(viewLifecycleOwner) {
+                    requireActivity().findViewById<Toolbar>(R.id.toolbar).title = it?.title
+                    if (it?.data != null) adapter.submitList(it.data as List<AdapterModel.FruitModel>)
                 }
             }
-
-            observer.observe(viewLifecycleOwner) {
-                requireActivity().findViewById<Toolbar>(R.id.toolbar).title = it.title
-                if (it.data != null) adapter.submitList(it.data as List<AdapterModel.FruitModel>)
-            }
         }
-
-        return super.onCreateView(inflater, container, savedInstanceState)
     }
+
     companion object {
         const val CONTENT = "content"
     }

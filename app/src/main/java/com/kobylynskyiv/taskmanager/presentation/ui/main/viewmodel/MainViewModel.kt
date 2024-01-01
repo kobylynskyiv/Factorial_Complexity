@@ -1,22 +1,19 @@
 package com.kobylynskyiv.taskmanager.presentation.ui.main.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.kobylynskyiv.core.domain.ResponseFruitCore
 import com.kobylynskyiv.data.di.UtilsProvides
 import com.kobylynskyiv.data.extentions.toFruitData
-import com.kobylynskyiv.data.model.Fruit
 import com.kobylynskyiv.data.usecase.GetFruitsUseCases
 import com.kobylynskyiv.taskmanager.presentation.base.AdapterModel
 import com.kobylynskyiv.taskmanager.presentation.entity.UIEvent
 import com.kobylynskyiv.taskmanager.presentation.entity.UIStatus
+import com.kobylynskyiv.taskmanager.presentation.utils.SingleLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,8 +23,8 @@ class MainViewModel @Inject constructor(
     @UtilsProvides.IoDispatcher private val default: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(){
 
-    val status = MutableLiveData<UIStatus?>()
-    private val _observer = fruitsUseCases.value.map {
+    val status = SingleLiveData<UIStatus?>()
+    val observer = fruitsUseCases.value.map {
         return@map when(it){
             is ResponseFruitCore -> {
                 status.postValue(UIStatus.COMPLETE)
@@ -42,14 +39,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    val observer: LiveData<UIEvent> get() = _observer
-
     fun fetch() = viewModelScope.launch(default) {
         status.postValue(UIStatus.LOADING)
         fruitsUseCases.invoke()
     }
 
-    override fun onCleared() {
+    public override fun onCleared() {
         status.postValue(null)
         super.onCleared()
     }

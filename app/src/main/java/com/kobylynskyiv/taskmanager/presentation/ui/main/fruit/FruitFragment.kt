@@ -31,35 +31,39 @@ class FruitFragment: BaseFragment<FragmentFruitBinding, FruitViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         val fruit = arguments?.getSerializable(CONTENT) as Fruit
 
-        with(viewModel){
-            loadFruit(fruit.id.toString())
-            requireActivity().findViewById<Toolbar>(R.id.toolbar).title = fruit.name
+        with(binding) {
+            if (this == null) return
 
-            Glide.with(binding.root.context)
-                .load("${BuildConfig.API_URL}${fruit.image}")
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .into(binding.image)
+            with(viewModel){
+                loadFruit(fruit.id.toString())
+                requireActivity().findViewById<Toolbar>(R.id.toolbar).title = fruit.name
 
-            status.observe(viewLifecycleOwner){
-                when(it){
-                    UIStatus.LOADING -> binding.includeLoading.root.visibleOrInvisible(true)
-                    UIStatus.COMPLETE -> {
-                        binding.includeLoading.root.visibleOrInvisible(false)
-                        alerter.showSuccess(getString(R.string.complete), it.toString())
+                Glide.with(root.context)
+                    .load("${BuildConfig.API_URL}${fruit.image}")
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .into(image)
+
+                status.observe(viewLifecycleOwner){
+                    when(it){
+                        UIStatus.LOADING -> includeLoading.root.visibleOrInvisible(true)
+                        UIStatus.COMPLETE -> {
+                            includeLoading.root.visibleOrInvisible(false)
+                            alerter.showSuccess(getString(R.string.complete), it.toString())
+                        }
+                        UIStatus.ERROR -> {
+                            includeLoading.root.visibleOrInvisible(false)
+                            alerter.showError(getString(R.string.error), it.toString())
+                        }
+
+                        else -> {}
                     }
-                    UIStatus.ERROR -> {
-                        binding.includeLoading.root.visibleOrInvisible(false)
-                        alerter.showError(getString(R.string.error), it.toString())
-                    }
-
-                    else -> {}
                 }
-            }
 
-            observer.observe(viewLifecycleOwner) {
-                if(it.data != null) {
-                    binding.content.visibleOrInvisible(true)
-                    binding.title.text = it.data.toString().replaceAllVariable(mapOf("{itemId}" to fruit.name))
+                observer.observe(viewLifecycleOwner) {
+                    if(it.data != null) {
+                        content.visibleOrInvisible(true)
+                        title.text = it.data.toString().replaceAllVariable(mapOf("{itemId}" to fruit.name))
+                    }
                 }
             }
         }

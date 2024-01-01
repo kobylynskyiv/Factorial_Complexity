@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.kobylynskyiv.taskmanager.presentation.utils.alert.Alerter
 import com.kobylynskyiv.taskmanager.presentation.utils.extentions.hideSoftInputKeyboard
-import com.kobylynskyiv.taskmanager.presentation.utils.lazyNonSafetyMode
 
 
 /**
@@ -26,7 +25,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>() : Fragment() {
 
     abstract val viewModel: VM
     val alerter: Alerter by lazy { Alerter(requireActivity()) }
-    open val binding by lazyNonSafetyMode { inflateViewBinding(inflater = layoutInflater) }
+    open var binding: VB? = null
 
     @MainThread
     override fun onCreateView(
@@ -34,7 +33,8 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>() : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        return binding.root
+        binding = inflateViewBinding(inflater = layoutInflater)
+        return binding?.root
     }
 
     /**
@@ -54,16 +54,17 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>() : Fragment() {
      */
     @MainThread
     fun onBackPressed(updateScreen: Boolean = false) {
-        if(updateScreen) {
-            activity?.onBackPressedDispatcher?.onBackPressed()
-            refreshFragment()
-        }
-        else activity?.onBackPressedDispatcher?.onBackPressed()
+        activity?.onBackPressedDispatcher?.onBackPressed()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+        viewModelStore.clear()
     }
 
     override fun onPause() {
         super.onPause()
-        viewModelStore.clear()
         activity?.hideSoftInputKeyboard()
     }
     @MainThread
